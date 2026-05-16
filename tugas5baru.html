@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gadly – Best Catering Website</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <style>
+    :root {
+      --green:        #2a6a44;
+      --green-light:  #3a8a58;
+      --green-pale:   #edf7f1;
+      --green-icon:   #4caf78;
+      --text-dark:    #1a1a1a;
+      --text-muted:   #6b7280;
+      --border:       #e5e7eb;
+      --white:        #ffffff;
+      --footer-bg:    #2a6a44;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text-dark);
+      background: #f5f5f5;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+    /* ───────────── NAVBAR ───────────── */
+    .navbar {
+      background: var(--white);
+      padding: 14px 40px;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .navbar-brand {
+      font-family: 'Playfair Display', serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+      color: var(--green) !important;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .navbar-brand .logo-leaf {
+      width: 28px; height: 28px;
+      background: var(--green);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .navbar-brand .logo-leaf::after {
+      content: '';
+      display: block;
+      width: 12px; height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      margin: 8px auto 0;
+    }
+    .nav-link {
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--text-dark) !important;
+      padding: 0 14px !important;
+    }
+    .nav-link:hover { color: var(--green) !important; }
+    .btn-booking {
+      background: var(--green);
+      color: #fff !important;
+      border-radius: 50px;
+      padding: 8px 24px !important;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: background .2s;
+    }
+    .btn-booking:hover { background: var(--green-light); }
+
+    /* ───────────── HERO ───────────── */
+    .hero {
+      background: var(--white);
+      padding: 60px 80px 50px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      position: relative;
+      min-height: 520px;
+    }
+    .hero-text { max-width: 500px; }
+    .hero-eyebrow {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-size: clamp(2.4rem, 5vw, 3.4rem);
+      line-height: 1.15;
+      color: var(--text-dark);
+      margin-bottom: 20px;
+    }
+    .hero-desc {
+      font-size: .93rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary-green {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary-green:hover { background: var(--green-light); transform: translateY(-2px); }
+    .btn-outline-green {
+      background: transparent;
+      color: var(--green);
+      border: 2px solid var(--green);
+      border-radius: 50px;
+      padding: 11px 28px;
+      font-size: .9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-outline-green:hover { background: var(--green); color: #fff; }
+
+    .hero-image {
+      position: absolute;
+      right: 0; top: 0;
+      width: 54%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-image-overlay {
+      position: absolute;
+      right: 0; top: 0;
+      width: 54%;
+      height: 100%;
+      background: linear-gradient(to right, #fff 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    .hero-social {
+      position: absolute;
+      bottom: 28px;
+      left: 80px;
+      display: flex;
+      gap: 10px;
+    }
+    .social-dot {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      background: var(--green);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .social-dot:hover { transform: scale(1.12); }
+
+    /* ───────────── FEATURES ───────────── */
+    .features { background: #fff; padding: 70px 60px; }
+    .feature-card {
+      background: var(--green-pale);
+      border-radius: 16px;
+      padding: 28px 24px;
+      height: 100%;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(42,106,68,.12); }
+    .feature-icon {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(76,175,120,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      color: var(--green);
+      font-size: 1.1rem;
+    }
+    .feature-title {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 8px;
+      color: var(--text-dark);
+    }
+    .feature-desc {
+      font-size: .83rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ───────────── MENU / FEEDBACK ───────────── */
+    .menu-section { background: #fafafa; padding: 70px 60px; }
+    .section-label {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--green);
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 2rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 40px;
+      color: var(--text-dark);
+    }
+    .dot-nav { display: flex; justify-content: center; gap: 6px; margin-bottom: 36px; }
+    .dot-nav span {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      display: inline-block;
+    }
+    .dot-nav span.active { background: var(--green); width: 22px; border-radius: 4px; }
+
+    .menu-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      transition: transform .2s, box-shadow .2s;
+      height: 100%;
+    }
+    .menu-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,.1); }
+    .menu-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .menu-card-body { padding: 20px 18px 22px; }
+    .menu-card-title {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+    .menu-card-desc {
+      font-size: .82rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .menu-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .btn-sm-green {
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 7px 20px;
+      font-size: .8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .2s;
+    }
+    .btn-sm-green:hover { background: var(--green-light); }
+    .card-rating { color: var(--green); font-size: .85rem; }
+
+    /* ───────────── CTA STRIP ───────────── */
+    .cta-section {
+      background: #fff;
+      padding: 70px 80px;
+      display: flex;
+      align-items: center;
+      gap: 60px;
+    }
+    .cta-text { flex: 1; }
+    .cta-text p.sub {
+      font-size: .8rem;
+      color: var(--green);
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .cta-text h2 {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      line-height: 1.25;
+      margin-bottom: 18px;
+    }
+    .cta-text p.body {
+      font-size: .9rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 24px;
+    }
+    .cta-link {
+      color: var(--green);
+      font-weight: 700;
+      font-size: .9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: gap .2s;
+    }
+    .cta-link:hover { gap: 12px; }
+    .cta-image { flex: 1; }
+    .cta-image img {
+      width: 100%;
+      border-radius: 20px;
+      object-fit: cover;
+      height: 320px;
+    }
+
+    /* ───────────── FOOTER ───────────── */
+    footer {
+      background: var(--footer-bg);
+      color: rgba(255,255,255,.85);
+      padding: 22px 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    footer .footer-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .82rem;
+    }
+    footer .footer-item i { color: rgba(255,255,255,.7); }
+
+    /* ───────────── RESPONSIVE ───────────── */
+    @media (max-width: 991px) {
+      .hero { padding: 50px 30px 80px; flex-direction: column; min-height: auto; }
+      .hero-image, .hero-image-overlay { position: relative; width: 100%; height: 280px; margin-top: 30px; border-radius: 16px; }
+      .hero-image-overlay { display: none; }
+      .hero-social { left: 30px; }
+      .features, .menu-section { padding: 50px 20px; }
+      .cta-section { flex-direction: column; padding: 50px 20px; gap: 30px; }
+      footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAVBAR ═══════════════ -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container-fluid px-0">
+    <a class="navbar-brand" href="#">
+      <span class="logo-leaf"></span>
+      Gadly
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navMenu">
+      <ul class="navbar-nav gap-1">
+        <li class="nav-item"><a class="nav-link" href="#">Home <i class="fa fa-angle-down ms-1" style="font-size:.75rem"></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Menus</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">About <i class="fa fa-angle-down ms-1" style="font-size:.75rem"></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Taste</a></li>
+      </ul>
+    </div>
+    <a href="#" class="btn-booking ms-3">Booking</a>
+  </div>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Honest Bhete Super</div>
+    <h1 class="hero-title">Best Catering<br>Website</h1>
+    <p class="hero-desc">
+      Gadly helps you plan, manage, and serve the finest catering experiences.
+      Great food, beautiful presentation, delivered on time — every single time.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-primary-green">Find out more</button>
+      <button class="btn-outline-green">Order now</button>
+    </div>
+  </div>
+
+  <!-- Decorative food photo -->
+  <img
+    class="hero-image"
+    src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=900&q=80"
+    alt="Catering dish"
+  />
+  <div class="hero-image-overlay"></div>
+
+  <!-- Social icons -->
+  <div class="hero-social">
+    <div class="social-dot"><i class="fab fa-facebook-f"></i></div>
+    <div class="social-dot"><i class="fab fa-instagram"></i></div>
+    <div class="social-dot"><i class="fab fa-twitter"></i></div>
+    <div class="social-dot"><i class="far fa-envelope"></i></div>
+  </div>
+</section>
+
+<!-- ═══════════════ FEATURES ═══════════════ -->
+<section class="features">
+  <div class="row g-4">
+    <!-- Row 1 -->
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-utensils"></i></div>
+        <div class="feature-title">White Glove Service</div>
+        <div class="feature-desc">Anytime you need high-end service, we're here with professional staff.</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-fire"></i></div>
+        <div class="feature-title">Fresh Runner</div>
+        <div class="feature-desc">Always fresh ingredients delivered and prepared on-site by our chefs.</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-star"></i></div>
+        <div class="feature-title">Market Choice</div>
+        <div class="feature-desc">Curated menu options sourced from the best local markets daily.</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-desktop"></i></div>
+        <div class="feature-title">Smart Ordering</div>
+        <div class="feature-desc">Order online and track your catering order from start to delivery.</div>
+      </div>
+    </div>
+    <!-- Row 2 -->
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-times-circle"></i></div>
+        <div class="feature-title">No Waste Plating</div>
+        <div class="feature-desc">We calculate portions precisely, minimising food waste at every event.</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-search"></i></div>
+        <div class="feature-title">Amanry Stay</div>
+        <div class="feature-desc">Tailored tasting sessions ensure your menu is perfect before the event.</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-image"></i></div>
+        <div class="feature-title">Fuel Affordability</div>
+        <div class="feature-desc">Premium catering experience at competitive prices — no hidden costs.</div>
+      </div>
+    </div>
+    <div class="col-6 col-md-3">
+      <div class="feature-card">
+        <div class="feature-icon"><i class="fas fa-box"></i></div>
+        <div class="feature-title">Full Portions</div>
+        <div class="feature-desc">Generous servings with consistent quality for groups of any size.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ MENU FEEDBACK ═══════════════ -->
+<section class="menu-section">
+  <div class="section-label">In Progress · Outstanding</div>
+  <h2 class="section-title">Taly Feedback</h2>
+  <div class="dot-nav">
+    <span class="active"></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-12 col-md-4">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=600&q=80" alt="Dish 1"/>
+        <div class="menu-card-body">
+          <div class="menu-card-title">High Fusing Years</div>
+          <div class="menu-card-desc">Lorem MarkVerse one year amazingly delivered star quality under the finest European and international traditions.</div>
+          <div class="menu-card-footer">
+            <button class="btn-sm-green">Reserve</button>
+            <div class="card-rating"><i class="fas fa-heart"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80" alt="Dish 2"/>
+        <div class="menu-card-body">
+          <div class="menu-card-title">While Live to Can Lies</div>
+          <div class="menu-card-desc">Curated from our best performing menus, this selection always brings comfort and elegance together.</div>
+          <div class="menu-card-footer">
+            <button class="btn-sm-green">Reserve</button>
+            <div class="card-rating"><i class="fas fa-heart"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="menu-card">
+        <img src="https://images.unsplash.com/photo-1476224203421-9ac39bcb3327?w=600&q=80" alt="Dish 3"/>
+        <div class="menu-card-body">
+          <div class="menu-card-title">Dergam Fdetts</div>
+          <div class="menu-card-desc">Unmistakably fine, the kitchen delivers exceptional plating and world-class flavours for every occasion.</div>
+          <div class="menu-card-footer">
+            <button class="btn-sm-green">Reserve</button>
+            <div class="card-rating"><i class="fas fa-heart"></i></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ CTA STRIP ═══════════════ -->
+<section class="cta-section">
+  <div class="cta-text">
+    <p class="sub">Oliver tasalam et sign of defenses amendments.</p>
+    <h2>Fivius will affigen on<br>pari-step lioe.</h2>
+    <p class="body">
+      Pelletespo fre gorge. Plasm, closur impinguam. Zaloque gyems in anercuit
+      point for dream clous evestnamus. lora. In sa incibe-oati oleived spring up availlity flu
+      elduovi auf qaenistang. Bonsa pinceanimus referral-forms after lesined aordemis
+      putturny, nullac, a mangrift of gonos thermforerong fhuspernte. By ldanmny
+      Waboosimly to sonforis to foncio fio aur, legervasisast olurforis.
+    </p>
+    <a href="#" class="cta-link">
+      Get Free Booking <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+  <div class="cta-image">
+    <img src="https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=80" alt="Sandwich catering"/>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer>
+  <div class="footer-item">
+    <i class="fas fa-phone"></i>
+    <span>+60 749 054</span>
+  </div>
+  <div class="footer-item">
+    <i class="fas fa-envelope"></i>
+    <span>amazing@catering-email.com</span>
+  </div>
+  <div class="footer-item">
+    <i class="fas fa-map-marker-alt"></i>
+    <span>Carefull Jpresonn.com</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
